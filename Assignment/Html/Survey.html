@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .gender-group {
+            display: flex;
+        }
+
+        .gender-group label {
+            margin-right: 10px;
+        }
+
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        input[type="reset"] {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="reset"]:hover {
+            background-color: #d32f2a;
+        }
+
+        #result-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="survey-form">
+            <div class="form-group">
+                <label for="first-name">First Name:</label>
+                <input type="text" id="first-name" name="first-name" required>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name:</label>
+                <input type="text" id="last-name" name="last-name" required>
+            </div>
+            <div class="form-group">
+                <label for="date-of-birth">Date of Birth:</label>
+                <input type="date" id="date-of-birth" name="date-of-birth" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <select id="country" name="country" required>
+                    <option value="usa">USA</option>
+                    <option value="canada">Canada</option>
+                    <option value="uk">UK</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <div class="gender-group">
+                    <input type="checkbox" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <input type="checkbox" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                    <input type="checkbox" id="other" name="gender" value="other">
+                    <label for="other">Other</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="profession">Profession:</label>
+                <input type="text" id="profession" name="profession" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="mobile-number">Mobile Number:</label>
+                <input type="text" id="mobile-number" name="mobile-number" required>
+            </div>
+            <input type="button" value="Submit" onclick="showPopup()">
+            <input type="reset" value="Reset">
+        </form>
+    </div>
+
+    <div id="result-popup">
+        <div id="popup-content">
+            <h2>Survey Results</h2>
+            <p>First Name: <span id="result-first-name"></span></p>
+            <p>Last Name: <span id="result-last-name"></span></p>
+            <p>Date of Birth: <span id="result-date-of-birth"></span></p>
+            <p>Country: <span id="result-country"></span></p>
+            <p>Gender: <span id="result-gender"></span></p>
+            <p>Profession: <span id="result-profession"></span></p>
+            <p>Email: <span id="result-email"></span></p>
+            <p>Mobile Number: <span id="result-mobile-number"></span></p>
+            <button onclick="hidePopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function showPopup() {
+            var firstName = document.getElementById("first-name").value;
+            var lastName = document.getElementById("last-name").value;
+            var dateOfBirth = document.getElementById("date-of-birth").value;
+            var country = document.getElementById("country").value;
+            var genderElements = document.getElementsByName("gender");
+            var gender = "";
+            for (var i = 0; i < genderElements.length; i++) {
+                if (genderElements[i].checked) {
+                    gender += genderElements[i].value + " ";
+                }
+            }
+            var profession = document.getElementById("profession").value;
+            var email = document.getElementById("email").value;
+            var mobileNumber = document.getElementById("mobile-number").value;
+
+            document.getElementById("result-first-name").textContent = firstName;
+            document.getElementById("result-last-name").textContent = lastName;
+            document.getElementById("result-date-of-birth").textContent = dateOfBirth;
+            document.getElementById("result-country").textContent = country;
+            document.getElementById("result-gender").textContent = gender;
+            document.getElementById("result-profession").textContent = profession;
+            document.getElementById("result-email").textContent = email;
+            document.getElementById("result-mobile-number").textContent = mobileNumber;
+
+            document.getElementById("result-popup").style.display = "block";
+        }
+
+        function hidePopup() {
+            document.getElementById("result-popup").style.display = "none";
+            document.getElementById("survey-form").reset();
+        }
+    </script>
+</body>
+</html>
